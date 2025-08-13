@@ -4,14 +4,15 @@ from collections import Counter
 import requests
 from django.conf import settings
 from django.shortcuts import render
-
-
 # Create your views here.
 def dashboard(request):
     # return HttpResponse("¡Bienvenido a la aplicación Django!")
     return render(request, "dashboard/base.html")
 
 
+
+from django.contrib.auth.decorators import login_required
+@login_required
 def index(request):
     """
     Vista principal que obtiene datos de una API, los procesa y los renderiza en la plantilla del dashboard.
