@@ -31,7 +31,7 @@ SECRET_KEY = "django-insecure-0@iomif3z_l)eg)$b08^38%chx=*x8u42-g)+i6%lt@9)cd7x(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -80,14 +80,29 @@ WSGI_APPLICATION = "backend_analytics_server.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': os.environ.get('MYSQLDATABASE'),
+#         'USER': os.environ.get('MYSQLUSER'),
+#         'PASSWORD': os.environ.get('MYSQLPASSWORD'),
+#         'HOST': os.environ.get('MYSQLHOST'),
+#         'PORT': os.environ.get('MYSQLPORT'),
+#     }
+# }
+
 DATABASES = {
     "default": {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQLDATABASE'),
-        'USER': os.environ.get('MYSQLUSER'),
-        'PASSWORD': os.environ.get('MYSQLPASSWORD'),
-        'HOST': os.environ.get('MYSQLHOST'),
-        'PORT': os.environ.get('MYSQLPORT'),
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.getenv("MYSQLDATABASE", "django_data_monitor"),
+        "USER": os.getenv("MYSQLUSER", "root"),
+        "PASSWORD": os.getenv("MYSQLPASSWORD", ""),
+        "HOST": os.getenv("MYSQLHOST", "127.0.0.1"),  # evita None
+        "PORT": os.getenv("MYSQLPORT", "3306"),
+        "OPTIONS": {
+            "charset": "utf8mb4",
+            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
 
